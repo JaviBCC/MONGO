@@ -15,7 +15,7 @@ const ProfileSchema = new mongoose.Schema({
 
 
     dateofBirth: {
-            type: String,
+            type: Date,
             validate: [ function(dateofBirth) {
             return dateofBirth >= 2000-01-01;
                     
