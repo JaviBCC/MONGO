@@ -138,7 +138,9 @@ function checkRespuesta(err, res) {
 // .aggregate([{$group: {"_id": {"Asignatura": "$subject_name"}, 
 //                       "Media": {"$avg": "$mark"}}}, 
 //                      {$match: {"Media": {"$gt": 5}}}, 
+//                      {$sort: {"Media": -1}},
 //                      {$limit: 5} ])
+
 // .then((result) =>
 // {
 //     console.log(result);
@@ -233,21 +235,19 @@ function checkRespuesta(err, res) {
 // -- Obtén los nombres de los alumnos y la cantidad total de asignaturas por alumno cuyo profesor
 //    sea uno que elijáis.
 
-InfMarks
-.aggregate([
-            {$match: {"teachers.teacher_first_name": "Chiquito"}},
-            {$group: {"_id": {"Nombre Alumno": "$student_first_name",
-                              "Asignatura": "$subject_name"},
-                              "Cantidad": {"$sum": 1}}}
-           ])
+// InfMarks
+// .aggregate([{$unwind:"$teachers"},
+//             {$match: {"teachers.teacher_first_name": "Chiquito", "teachers.teacher_last_name": "De la calzada"}},
+//             {$group: {"_id": {"Nombre Alumno": "$student_first_name"}, "Cantidad": {"$sum": 1}}}
+//            ])
 
-.then((result) =>
-{
-    console.log(result);
-})
-.catch((error) =>
-{
-    console.log(error);
-})
+// .then((result) =>
+// {
+//     console.log(result);
+// })
+// .catch((error) =>
+// {
+//     console.log(error);
+// })
 
 //// Como me gusta mongo!!! Disfruto mucho con el!!! :-)
