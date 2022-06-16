@@ -4,17 +4,18 @@ const photosCtrl = require("../controller/photos.controller")
 
 
 // PHOTOS //
-// router.get("/", photosCtrl.getStart);
+
+router.get("/", photosCtrl.getStart);
 
 router.get("/photos/:id", photosCtrl.getPhotos);
 
-// router.get("/photos", photosCtrl.getPhotos);
+router.get("/photos", photosCtrl.getPhotos);
 
-// router.post("/photos", photosCtrl.postPhotos);
+router.post("/photos", photosCtrl.postPhotos);
 
-// router.put("/photos", photosCtrl.putPhotos);
+router.put("/photos", photosCtrl.putPhotos);
 
-// router.delete("/photos", photosCtrl.deletePhotos);
+router.delete("/photos", photosCtrl.deletePhotos);
 
 
 

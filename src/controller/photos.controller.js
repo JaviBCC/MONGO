@@ -14,12 +14,12 @@ function checkRespuesta(err, res) {
 }
 
 
-// function getStart(request, response) {
+function getStart(request, response) {
  
-//     let respuesta = {error: true, codigo: 200, mensaje: "Punto de Inicio"};
-//     response.send(respuesta);
-//     next();
-// }
+    let respuesta = {error: true, codigo: 200, mensaje: "Punto de Inicio"};
+    response.send(respuesta);
+    next();
+}
 
 
 function getPhotos(request, response)
@@ -60,11 +60,90 @@ function getPhotos(request, response)
 }
 
 
-module.exports = {getPhotos};        
+function postPhotos(request, response) 
+{
+    let myPhoto = new Photo({ name:        request.body.name,           
+                              url:         request.body.url,            
+                              title:       request.body.title,          
+                              description: request.body.description}) 
+    
+    myPhoto.save()
+
+    .then( (user) => 
+    {
+        console.log("Photo guardada correctamente")
+        console.log(user);
+        response.send(user);
+    })
+    .catch( (error) =>
+    {
+        console.log(error)
+    })
+    
+}
 
 
+function putPhotos(request, response) 
+{
+        Photo.updateOne({name: "Pepito", description: "Lugar emblematico en el corazon de Sevilla"}, 
+                         {description: "Acabo de cambiar la descripcion por un Reto, que malillos"}, checkRespuesta)
+      
+}
 
+function deletePhotos(request, response) 
+{
+    
+    let myName          = request.body.name;
+    let myTitle         = request.body.title;
+    let myUrl           = request.body.url;
+    let myDescription   = request.body.description;
 
-
-
+    if (myName != "" && myTitle != "") { 
  
+         Photo.deleteOne({name: myName, title: myTitle})
+ 
+         .then( (user) =>
+         {
+             console.log("Dato Correctamente Borrado")
+             console.log(user);
+             response.send(user);
+             mongoose.disconnect();
+ 
+         })
+ 
+         .catch( (err) =>
+         {
+             console.log(err);
+             process.exit(-1);
+         })
+     } 
+     else
+     {
+       if ((myName != "") && (myTitle == "") && (myUrl == "") && (myDescription == "")) {
+
+            Photo.deleteMany({name: myName})
+
+            .then( (user) =>
+            {
+                console.log("Dato Correctamente Borrado")
+                console.log(user);
+                response.send(user);
+                mongoose.disconnect();
+            })
+    
+            .catch( (err) =>
+            {
+                console.log(err);
+                process.exit(-1);
+            })
+        }
+
+     }    
+ }
+
+
+
+module.exports = {getStart, getPhotos, postPhotos, putPhotos, deletePhotos};        
+
+
+
