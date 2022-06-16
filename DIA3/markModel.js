@@ -192,13 +192,54 @@ function checkRespuesta(err, res) {
 
 // -- Obtén la media de las notas que se han dado en el último año por asignatura. //
 
-InfMarks 
-.aggregate([{$match: {"$and":[{date: {"$gte": new Date('2021,01,01')}},
-                              {date: {"$lt":  new Date('2022,01,01')}}] }},
+// InfMarks 
+// .aggregate([{$match: {"$and":[{date: {"$gte": new Date('2021,01,01')}},
+//                               {date: {"$lt":  new Date('2022,01,01')}}] }},
 
-            {$group: {"_id": {"Asignatura": "$subject_name"},  "Nota Media": {"$avg": "$mark"}}},
-          ])
+//             {$group: {"_id": {"Asignatura": "$subject_name"},  "Nota Media": {"$avg": "$mark"}}},
+//           ])
 
+
+// .then((result) =>
+// {
+//     console.log(result);
+// })
+// .catch((error) =>
+// {
+//     console.log(error);
+// })
+
+
+// -- Obtén la media aritmética de las notas que se han dado en el último año por nombre de alumno. //
+
+// InfMarks
+// .aggregate([{$match: {"$and":[{date: {"$gte": new Date('2021,01,01')}},
+//                               {date: {"$lt":  new Date('2022,01,01')}}] }},
+
+//             {$group: {"_id": {"Nombre Alumno": "$student_first_name"},  "Nota Media": {"$avg": "$mark"}}},
+//           ])
+
+
+// .then((result) =>
+// {
+//     console.log(result);
+// })
+// .catch((error) =>
+// {
+//     console.log(error);
+// })
+
+
+// -- Obtén los nombres de los alumnos y la cantidad total de asignaturas por alumno cuyo profesor
+//    sea uno que elijáis.
+
+InfMarks
+.aggregate([
+            {$match: {"teachers.teacher_first_name": "Chiquito"}},
+            {$group: {"_id": {"Nombre Alumno": "$student_first_name",
+                              "Asignatura": "$subject_name"},
+                              "Cantidad": {"$sum": 1}}}
+           ])
 
 .then((result) =>
 {
