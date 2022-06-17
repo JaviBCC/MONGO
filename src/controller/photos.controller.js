@@ -85,10 +85,31 @@ function postPhotos(request, response)
 
 function putPhotos(request, response) 
 {
-        Photo.updateOne({name: "Pepito", description: "Lugar emblematico en el corazon de Sevilla"}, 
-                         {description: "Acabo de cambiar la descripcion por un Reto, que malillos"}, checkRespuesta)
-      
+        let myName          = request.body.name;
+        let myDescription   = request.body.description;
+
+        // Photo.updateOne({name: myName, description: myDescription}, 
+        //                 {description: "Lo cambio por lo que me da la gana"}, checkRespuesta)
+
+        Photo.updateOne({name: myName}, 
+                        {description: myDescription})
+
+        .then( (user) =>
+        {
+            console.log("Dato Correctamente Modificado")
+            console.log(user);
+            response.send(user);
+            mongoose.disconnect();
+
+        })
+
+        .catch( (err) =>
+        {
+            console.log(err);
+            process.exit(-1);
+        })  
 }
+
 
 function deletePhotos(request, response) 
 {
